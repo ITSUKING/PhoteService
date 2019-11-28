@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404, redirect
+from django.views.decorators.http import require_POST
 
 from app.forms import PhotoForm
 from .models import Photo
@@ -51,3 +52,15 @@ def photos_post(request):
     else:
         form = PhotoForm
     return render(request, 'app/photos_post.html', {'form': form})
+
+
+def photos_detail(request, pk):
+    photo = get_object_or_404(Photo, pk=pk)
+    return render(request, 'app/photos_detail.html', {'photo': photo})
+
+
+@require_POST
+def photos_delete(request, pk):
+    photo = get_object_or_404(Photo, pk=pk)
+    photo.delete()
+    return redirect('app:users_detail', request.user.id)

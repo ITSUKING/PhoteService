@@ -16,5 +16,9 @@
         <br>
         <input type="submit" value="SUBMIT">
     </form>
-    <p><a href="{% url 'app:login' %}">LOGIN</a></p>
+    <form action="{% url 'app:login' %}">
+        <button type="submit" class="btn">
+            LOGIN
+        </button>
+    </form>
 {% endblock %}
