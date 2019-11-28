@@ -8,4 +8,8 @@
     {% else %}
         <p>一般ユーザー</p>
     {% endif %}
+    {% for photo in photos %}
+        <img src="{{ photo.image.url }}" alt="" class="photo-img">
+    {% endfor %}
+
 {% endblock %}
