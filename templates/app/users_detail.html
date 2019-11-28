@@ -9,7 +9,9 @@
         <p>一般ユーザー</p>
     {% endif %}
     {% for photo in photos %}
-        <img src="{{ photo.image.url }}" alt="" class="photo-img">
+        <a href="{% url 'app:photos_detail' photo.id %}">
+            <img src="{{ photo.image.url }}" alt="" class="photo-img">
+        </a>
     {% endfor %}
 
 {% endblock %}
