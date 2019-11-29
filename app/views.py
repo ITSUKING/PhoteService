@@ -8,12 +8,11 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.http import require_POST
 
 from app.forms import PhotoForm
-from .models import Photo
+from .models import Photo, Category
 
 
 def index(request):
     photos = Photo.objects.all().order_by('-created_at')
-    print(photos)
     return render(request, 'app/index.html', {'photos': photos})
 
 
@@ -64,3 +63,9 @@ def photos_delete(request, pk):
     photo = get_object_or_404(Photo, pk=pk)
     photo.delete()
     return redirect('app:users_detail', request.user.id)
+
+
+def photos_category(request, category):
+    category = Category.objects.get(title=category)
+    photos = Photo.objects.filter(category=category).order_by('-created_at')
+    return render(request, 'app/index.html', {'photos': photos, 'category': category})
