@@ -1,17 +1,18 @@
 {% extends 'app/base.html' %}
 {% block content %}
     <h2 class="user-name">@{{ user.username }}</h2>
-    {% include 'app/photos_list.html' %}
-    {#    ユーザの持つ権限によって表示を切り替える#}
-    {#        {% if user.is_superuser %}#}
-    {#            <p>管理者</p>#}
-    {#        {% else %}#}
-    {#            <p>一般ユーザー</p>#}
-    {#        {% endif %}#}
-    {#        {% for photo in photos %}#}
-    {#            <a href="{% url 'app:photos_detail' photo.id %}">#}
-    {#                <img src="{{ photo.image.url }}" alt="" class="photo-img">#}
-    {#            </a>#}
-    {#        {% endfor %}#}
+    {% if photos.count != 0 %}
+        <p>投稿 <strong>{{ photos.count }}</strong>件</p>
+    {% else %}
+        {% if user == request.user %}
+            <p>初めての投稿をしてみましょう!</p>
+            <form action="{% url 'app:photos_post' %}" method="get">{% csrf_token %}
+                <button type="submit" class="button">投稿してみる</button>
+            </form>
+        {% else %}
+            <p>@{{ user.username }}さんはまだ投稿をしていません</p>
+        {% endif %}
+    {% endif %}
 
+    {% include 'app/photos_list.html' %}
 {% endblock %}
