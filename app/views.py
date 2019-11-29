@@ -12,6 +12,11 @@ from .models import Photo, Category
 
 
 def index(request):
+    if request.method == 'POST':
+        easy_login_user = authenticate(username='hoghog', password='adminadmin')
+        if easy_login_user is not None:
+            login(request, easy_login_user)
+            return redirect('app:users_detail', pk=easy_login_user.pk)
     photos = Photo.objects.all().order_by('-created_at')
     return render(request, 'app/index.html', {'photos': photos})
 

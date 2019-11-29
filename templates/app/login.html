@@ -16,4 +16,7 @@
     <form action="{% url 'app:signup' %}">
         <button type="submit" class="btn">SIGN UP</button>
     </form>
+    <form action="{% url 'app:index' %}" method="post">{% csrf_token %}
+        <button type="submit" class="button">かんたんログイン</button>
+    </form>
 {% endblock %}
